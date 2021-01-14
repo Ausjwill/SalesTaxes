@@ -49,5 +49,20 @@ namespace Sales_Taxes_Repository
         {
             return _cartDirectory;
         }
+
+        public float SumOfAllTaxes()
+        {
+            float sum = 0;
+
+            foreach (StoreItems singleItem in _cartDirectory)
+            {
+                if (singleItem.ItemId != 0)
+                {
+                    sum += singleItem.SalesTax;
+                }
+                return sum;
+            }
+            return 0;
+        }
     }
 }

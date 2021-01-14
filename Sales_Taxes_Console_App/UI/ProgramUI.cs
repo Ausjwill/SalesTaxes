@@ -195,6 +195,10 @@ namespace Sales_Taxes_Console_App.UI
             {
                 DisplayReceipt(content);
             }
+            float taxes = _cartItemsRepo.SumOfAllTaxes();
+            Console.WriteLine($"Sales Taxes: {taxes}");
+            Console.WriteLine($"Total: ");
+            Console.WriteLine();
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }
@@ -239,57 +243,57 @@ namespace Sales_Taxes_Console_App.UI
         {
             if (content.ItemType == Type.Imported && content.ItemCategory == Category.Book)
             {
-                float x = content.ListPrice * 0.05;
-                content.SalesTax = (float)Math.Round(x * 20, 2) / 20;
+                float x = (float)(content.ListPrice * 0.05);
+                content.SalesTax = (float)Math.Ceiling(x * 20) / 20;
                 content.SalePrice = content.ListPrice + content.SalesTax;
                 Console.WriteLine($"{content.ItemType} {content.ItemCategory}: ${content.SalePrice}");
             }
             else if (content.ItemType == Type.Imported && content.ItemCategory == Category.Food)
             {
-                float x = content.ListPrice * 0.05;
-                content.SalesTax = (float)(Math.Round(x * 20, 2) / 20);
+                float x = (float)(content.ListPrice * 0.05);
+                content.SalesTax = (float)Math.Ceiling(x * 20) / 20;
                 content.SalePrice = content.ListPrice + content.SalesTax;
                 Console.WriteLine($"{content.ItemType} {content.ItemName}: ${content.SalePrice}");
             }
             else if (content.ItemType == Type.Imported && content.ItemCategory == Category.Medical_Product)
             {
-                float x = content.ListPrice * 0.05;
-                content.SalesTax = (float)(Math.Round(x * 20, 2) / 20);
+                float x = (float)(content.ListPrice * 0.05);
+                content.SalesTax = (float)Math.Ceiling(x * 20) / 20;
                 content.SalePrice = content.ListPrice + content.SalesTax;
                 Console.WriteLine($"{content.ItemType} {content.ItemName}: ${content.SalePrice}");
             }
             else if (content.ItemType == Type.Imported && content.ItemCategory == Category.Other)
             {
-                float x = content.ListPrice * 0.15;
-                content.SalesTax = (float)(Math.Round(x * 20, 2) / 20);
+                float x = (float)(content.ListPrice * 0.15);
+                content.SalesTax = (float)Math.Ceiling(x * 20) / 20;
                 content.SalePrice = content.ListPrice + content.SalesTax;
                 Console.WriteLine($"{content.ItemType} {content.ItemName}: ${content.SalePrice}");
             }
             else if (content.ItemType == Type.Not_Imported && content.ItemCategory == Category.Book)
             {
-                float x = content.ListPrice * 0.00;
-                content.SalesTax = (float)(Math.Round(x * 20, 2) / 20);
+                float x = (float)(content.ListPrice * 0);
+                content.SalesTax = (float)Math.Ceiling(x * 20) / 20;
                 content.SalePrice = content.ListPrice + content.SalesTax;
                 Console.WriteLine($"{content.ItemCategory}: ${content.SalePrice}");
             }
             else if (content.ItemType == Type.Not_Imported && content.ItemCategory == Category.Food)
             {
-                float x = content.ListPrice * 0.00;
-                content.SalesTax = (float)(Math.Round(x * 20, 2) / 20);
+                float x = (float)(content.ListPrice * 0);
+                content.SalesTax = (float)Math.Ceiling(x * 20) / 20;
                 content.SalePrice = content.ListPrice + content.SalesTax;
                 Console.WriteLine($"{content.ItemName}: ${content.SalePrice}");
             }
             else if (content.ItemType == Type.Not_Imported && content.ItemCategory == Category.Medical_Product)
             {
-                float x = content.ListPrice * 0.00;
-                content.SalesTax = (float)(Math.Round(x * 20, 2) / 20);
+                float x = (float)(content.ListPrice * 0);
+                content.SalesTax = (float)Math.Ceiling(x * 20) / 20;
                 content.SalePrice = content.ListPrice + content.SalesTax;
                 Console.WriteLine($"{content.ItemName}: ${content.SalePrice}");
             }
             else if (content.ItemType == Type.Not_Imported && content.ItemCategory == Category.Other)
             {
-                float x = content.ListPrice * 0.10;
-                content.SalesTax = (float)(Math.Round(x * 20, 2) / 20);
+                float x = (float)(content.ListPrice * 0.10);
+                content.SalesTax = (float)Math.Ceiling(x * 20) / 20;
                 content.SalePrice = content.ListPrice + content.SalesTax;
                 Console.WriteLine($"{content.ItemName}: ${content.SalePrice}");
             }
