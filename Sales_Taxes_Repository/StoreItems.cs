@@ -15,55 +15,8 @@ namespace Sales_Taxes_Repository
         public Category ItemCategory { get; set; }
         public string ItemName { get; set; }
         public float ListPrice { get; set; }
-        public float SalesTax
-        {
-            get
-            {
-                if (ItemType == Type.Imported && ItemCategory == Category.Book)
-                {
-                    SalesTax = ListPrice * 0.05f;
-                }
-                else if (ItemType == Type.Imported && ItemCategory == Category.Food)
-                {
-                    SalesTax = ListPrice * 0.05f;
-                }
-                else if (ItemType == Type.Imported && ItemCategory == Category.Medical_Product)
-                {
-                    SalesTax = ListPrice * 0.05f;
-                }
-                else if (ItemType == Type.Imported && ItemCategory == Category.Other)
-                {
-                    SalesTax = ListPrice * 0.15f;
-                }
-                else if (ItemType == Type.Not_Imported && ItemCategory == Category.Book)
-                {
-                    SalesTax = ListPrice * 0.0f;
-                }
-                else if (ItemType == Type.Not_Imported && ItemCategory == Category.Food)
-                {
-                    SalesTax = ListPrice * 0.0f;
-                }
-                else if (ItemType == Type.Not_Imported && ItemCategory == Category.Medical_Product)
-                {
-                    SalesTax = ListPrice * 0.0f;
-                }
-                else if (ItemType == Type.Not_Imported && ItemCategory == Category.Other)
-                {
-                    SalesTax = ListPrice * 0.1f;
-                }
-                return SalesTax;
-            }
-            set { }
-        }
-        public float SalePrice
-        {
-            get
-            {
-                SalePrice = ListPrice + SalesTax;
-                return SalePrice;
-            }
-            set { }
-        }
+        public float SalesTax { get; set; }
+        public float SalePrice { get; set; }
 
         public StoreItems() { }
         public StoreItems(int itemId, Type itemType, Category itemCategory, string itemName, float listPrice)
