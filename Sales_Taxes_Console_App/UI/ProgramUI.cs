@@ -16,8 +16,7 @@ namespace Sales_Taxes_Console_App.UI
         public void Run()
         {
             Console.Title = "Sales Taxes";
-            //Console.ForegroundColor = ConsoleColor.DarkBlue;
-            //Console.ResetColor();
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             string title = @"
                           __________________________________________________________
                          |                                                          |
@@ -47,6 +46,7 @@ namespace Sales_Taxes_Console_App.UI
 ";
             Console.WriteLine(title);
             Thread.Sleep(5000);
+            Console.ResetColor();
             Console.Clear();
             SeedContent();
             RunMenu();
@@ -57,7 +57,10 @@ namespace Sales_Taxes_Console_App.UI
             while (continueToRun)
             {
                 Console.Clear();
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("Hello, What would you like to do?");
+                Console.ResetColor();
+                Console.WriteLine();
                 Console.WriteLine("1. See all store items\n" +
                 "2. Add a new item to store inventory\n" +
                 "3. Add an item to your cart\n" +
@@ -67,29 +70,27 @@ namespace Sales_Taxes_Console_App.UI
                 switch (adminInput)
                 {
                     case "1":
-                        //SHOW ALL
                         ShowAllItems();
                         break;
                     case "2":
-                        //ADD NEW
                         AddNewItem();
                         break;
                     case "3":
-                        //ADD TO CART
                         AddItemToCart();
                         break;
                     case "4":
-                        //VIEW CART
                         ViewReceipt();
                         break;
                     case "5":
-                        //Exit
                         continueToRun = false;
                         break;
                     default:
-                        //Default
+                        Console.WriteLine();
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
                         Console.WriteLine("Please enter a valid number between 1 & 5");
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
                         Console.WriteLine("Press any key to continue...");
+                        Console.ResetColor();
                         Console.ReadKey();
                         break;
                 }
@@ -103,22 +104,39 @@ namespace Sales_Taxes_Console_App.UI
             {
                 DisplaySimple(content);
             }
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("Press any key to continue...");
+            Console.ResetColor();
             Console.ReadKey();
         }
         private void AddNewItem()
         {
             Console.Clear();
-            StoreItems content = new StoreItems();
-            Console.WriteLine("Enter the item ID:");
-            content.ItemId = int.Parse(Console.ReadLine());
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine("Current Items:");
+            Console.ResetColor();
             List<StoreItems> listOfItems = _storeItemsRepo.ShowAllItems();
-            foreach (StoreItems items in listOfItems)
+            foreach (StoreItems item in listOfItems)
+            {
+                DisplaySimple(item);
+            }
+
+            Console.WriteLine();
+            StoreItems content = new StoreItems();
+            Console.WriteLine("Enter new item number:");
+            content.ItemId = int.Parse(Console.ReadLine());
+            List<StoreItems> itemList = _storeItemsRepo.ShowAllItems();
+            foreach (StoreItems items in itemList)
             {
                 if (content.ItemId == items.ItemId)
                 {
-                    Console.WriteLine("Item ID already exists");
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Item number already exists");
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
                     Console.WriteLine("Press any key to continue...");
+                    Console.ResetColor();
                     Console.ReadKey();
                     RunMenu();
                 }
@@ -138,9 +156,14 @@ namespace Sales_Taxes_Console_App.UI
                     content.ItemType = Type.Not_Imported;
                     break;
                 default:
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine("Please enter 1 or 2");
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
                     Console.WriteLine("Press any key to continue...");
+                    Console.ResetColor();
                     Console.ReadKey();
+                    RunMenu();
                     break;
             }
             Console.Clear();
@@ -165,9 +188,14 @@ namespace Sales_Taxes_Console_App.UI
                     content.ItemCategory = Category.Other;
                     break;
                 default:
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine("Please enter a valid number between 1 & 4");
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
                     Console.WriteLine("Press any key to continue...");
+                    Console.ResetColor();
                     Console.ReadKey();
+                    RunMenu();
                     break;
             }
             Console.Clear();
@@ -176,18 +204,21 @@ namespace Sales_Taxes_Console_App.UI
             content.ItemName = name;
 
             Console.Clear();
-            Console.WriteLine($"Please enter the price:");
+            Console.WriteLine($"Enter the price:");
             content.ListPrice = float.Parse(Console.ReadLine());
 
             _storeItemsRepo.AddItemsToStore(content);
-            Console.WriteLine("Item added to store inventory");
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("Item successfully added to store inventory!");
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("Press any key to continue...");
+            Console.ResetColor();
             Console.ReadKey();
         }
         private void AddItemToCart()
         {
             Console.Clear();
-            Console.WriteLine("ID");
             List<StoreItems> listOfItems = _storeItemsRepo.ShowAllItems();
             foreach (StoreItems item in listOfItems)
             {
@@ -195,18 +226,27 @@ namespace Sales_Taxes_Console_App.UI
             }
 
             Console.WriteLine();
-            Console.WriteLine("Enter the ID of the item you would like to add to your cart:");
+            Console.WriteLine("Enter the number of the item you would like to add to your cart:");
             int id = int.Parse(Console.ReadLine());
             StoreItems content = _storeItemsRepo.GetItemsById(id);
             if (content != null)
             {
                 _cartItemsRepo.AddItemsToCart(content);
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Item successfully added to cart!");
+                Console.ResetColor();
             }
             else
             {
-                Console.WriteLine("There are no items that match that ID.");
+                Console.WriteLine();
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("There are no items that match that number.");
+                Console.ResetColor();
             }
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("Press any key to continue...");
+            Console.ResetColor();
             Console.ReadKey();
         }
         private void ViewReceipt()
@@ -222,10 +262,11 @@ namespace Sales_Taxes_Console_App.UI
             Console.WriteLine($"Sales Taxes: ${taxes}");
             Console.WriteLine($"Total: ${total}");
             Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine("Press any key to continue...");
+            Console.ResetColor();
             Console.ReadKey();
         }
-
         private void DisplaySimple(StoreItems content)
         {
             if (content.ItemType == Type.Imported && content.ItemCategory == Category.Book)
@@ -261,7 +302,6 @@ namespace Sales_Taxes_Console_App.UI
                 Console.WriteLine($"{content.ItemId}. {content.ItemName} at ${content.ListPrice}");
             }
         }
-
         private void DisplayReceipt(StoreItems content)
         {
             if (content.ItemType == Type.Imported && content.ItemCategory == Category.Book)
@@ -321,7 +361,6 @@ namespace Sales_Taxes_Console_App.UI
                 Console.WriteLine($"{content.ItemName}: ${content.SalePrice}");
             }
         }
-
         private void SeedContent()
         {
             var storeItemOne = new StoreItems(1, Type.Not_Imported, Category.Book, "", 12.49f);

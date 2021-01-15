@@ -33,7 +33,7 @@ namespace Sales_Taxes_Repository
         {
             int startingCount = _storeDirectory.Count;
             _storeDirectory.Add(newContent);
-            bool wasAdded = (_storeDirectory.Count > startingCount) ? true : false;
+            bool wasAdded = (_storeDirectory.Count > startingCount);
             return wasAdded;
         }
 
@@ -41,7 +41,7 @@ namespace Sales_Taxes_Repository
         {
             int startingCount = _cartDirectory.Count;
             _cartDirectory.Add(newContent);
-            bool wasAdded = (_cartDirectory.Count > startingCount) ? true : false;
+            bool wasAdded = (_cartDirectory.Count > startingCount);
             return wasAdded;
         }
 
@@ -56,7 +56,7 @@ namespace Sales_Taxes_Repository
 
             foreach (StoreItems singleItem in _cartDirectory)
             {
-                    sum += singleItem.SalesTax;
+                sum += singleItem.SalesTax;
             }
             return sum;
         }
