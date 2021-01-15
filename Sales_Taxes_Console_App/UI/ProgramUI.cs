@@ -112,6 +112,17 @@ namespace Sales_Taxes_Console_App.UI
             StoreItems content = new StoreItems();
             Console.WriteLine("Enter the item ID:");
             content.ItemId = int.Parse(Console.ReadLine());
+            List<StoreItems> listOfItems = _storeItemsRepo.ShowAllItems();
+            foreach (StoreItems items in listOfItems)
+            {
+                if (content.ItemId == items.ItemId)
+                {
+                    Console.WriteLine("Item ID already exists");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    RunMenu();
+                }
+            }
 
             Console.Clear();
             Console.WriteLine("Enter the Item Type:");
@@ -169,10 +180,21 @@ namespace Sales_Taxes_Console_App.UI
             content.ListPrice = float.Parse(Console.ReadLine());
 
             _storeItemsRepo.AddItemsToStore(content);
+            Console.WriteLine("Item added to store inventory");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
         private void AddItemToCart()
         {
             Console.Clear();
+            Console.WriteLine("ID");
+            List<StoreItems> listOfItems = _storeItemsRepo.ShowAllItems();
+            foreach (StoreItems item in listOfItems)
+            {
+                DisplaySimple(item);
+            }
+
+            Console.WriteLine();
             Console.WriteLine("Enter the ID of the item you would like to add to your cart:");
             int id = int.Parse(Console.ReadLine());
             StoreItems content = _storeItemsRepo.GetItemsById(id);
@@ -196,8 +218,9 @@ namespace Sales_Taxes_Console_App.UI
                 DisplayReceipt(content);
             }
             float taxes = _cartItemsRepo.SumOfAllTaxes();
-            Console.WriteLine($"Sales Taxes: {taxes}");
-            Console.WriteLine($"Total: ");
+            float total = _cartItemsRepo.SumOfAllItems();
+            Console.WriteLine($"Sales Taxes: ${taxes}");
+            Console.WriteLine($"Total: ${total}");
             Console.WriteLine();
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
